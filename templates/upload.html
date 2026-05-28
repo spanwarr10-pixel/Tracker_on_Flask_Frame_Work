@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<h2><span class="airtel-red">Upload</span> Data Hub</h2>
+<hr>
+
+<div style="display: flex; gap: 40px; margin-top: 20px;">
+    <div style="flex: 6;">
+        <h3>📤 Upload File (Excel / CSV)</h3>
+        <form method="POST" enctype="multipart/form-data" style="border: 2px dashed #FF0000; padding: 30px; border-radius: 8px; text-align: center; background: #fff;">
+            <input type="file" name="file" accept=".csv, .xlsx" required style="margin-bottom: 20px;">
+            <br>
+            <button type="submit" style="padding: 10px 20px; background-color: #FF0000; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">Validate & Process Data</button>
+        </form>
+
+        {% if errors %}
+            <div class="alert alert-danger" style="margin-top: 20px;">
+                <strong>Validation Failed:</strong>
+                <ul style="margin-top: 10px; margin-bottom: 0;">
+                {% for error in errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+
+    <div style="flex: 4;">
+        <h3>📥 Download Template</h3>
+        <p style="color: #666;">Use this exact format to ensure smooth uploads.</p>
+        <a href="{{ url_for('download_template') }}" style="display: inline-block; padding: 10px 20px; border: 1px solid #333; color: #000; text-decoration: none; border-radius: 4px; font-weight: bold;">Download Master Template (.xlsx)</a>
+    </div>
+</div>
+{% endblock %}
