@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+<h2><span class="airtel-red">Other</span> Summary</h2>
+<h3>Today's Upload Log</h3>
+
+<div style="overflow-x: auto;">
+    {% if table %}
+        {{ table|safe }}
+    {% else %}
+        <p>No data has been uploaded today.</p>
+    {% endif %}
+</div>
+{% endblock %}
