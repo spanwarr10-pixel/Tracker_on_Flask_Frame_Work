@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block content %}
+<h2><span class="airtel-red">WOW Project</span> Dashboard</h2>
+
+<div style="display: flex; gap: 20px; margin-bottom: 20px;">
+    <div style="flex: 1; background: #E2E8F0; padding: 15px; border-radius: 5px;">
+        <strong>Total Records Uploaded:</strong> {{ total }}
+    </div>
+    <div style="flex: 1; background: #D4EDDA; padding: 15px; border-radius: 5px;">
+        <strong>Records for {{ session.circle }} Circle:</strong> {{ circle_count }}
+    </div>
+</div>
+
+<h3>📊 Database View</h3>
+<div style="overflow-x: auto;">
+    {% if table %}
+        {{ table|safe }}
+    {% else %}
+        <p>No data available yet. Please navigate to the Upload page.</p>
+    {% endif %}
+</div>
+{% endblock %}
