@@ -1,22 +1,35 @@
 {% extends "base.html" %}
 {% block content %}
-<h2><span class="airtel-red">WOW Project</span> Dashboard</h2>
+<h2 style="font-size: 28px; margin-bottom: 25px;"><span class="airtel-red">WOW Project</span> Dashboard</h2>
 
-<div style="display: flex; gap: 20px; margin-bottom: 20px;">
-    <div style="flex: 1; background: #E2E8F0; padding: 15px; border-radius: 5px;">
-        <strong>Total Records Uploaded:</strong> {{ total }}
+<div style="background-color: #E8F4FD; border: 1px solid #BEE3F8; border-radius: 8px; padding: 20px; margin-bottom: 25px; color: #2B6CB0;">
+    <div style="margin-bottom: 8px;"><i class="fa-solid fa-user-tie" style="color: #4299E1; width: 25px;"></i> <strong>User:</strong> {{ session.email.split('@')[0] | replace('.', ' ') | title }}</div>
+    <div style="margin-bottom: 8px;"><i class="fa-solid fa-location-dot" style="color: #E53E3E; width: 25px;"></i> <strong>Circle:</strong> {{ session.circle }}</div>
+    <div style="margin-bottom: 8px;"><i class="fa-regular fa-clock" style="color: #DD6B20; width: 25px;"></i> <strong>Login Time:</strong> {{ session.login_time }}</div>
+    <div><i class="fa-solid fa-sun" style="color: #D69E2E; width: 25px;"></i> <strong>{{ greeting }}</strong></div>
+</div>
+
+<div style="display: flex; gap: 20px; margin-bottom: 30px;">
+    <div style="flex: 1; background: linear-gradient(135deg, #FF6B6B 0%, #FF8E53 100%); color: white; padding: 25px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(255, 107, 107, 0.3); text-align: center;">
+        <h4 style="margin: 0 0 10px 0; font-weight: 500; font-size: 16px;"><i class="fa-solid fa-database"></i> Total Records (Pan India)</h4>
+        <h1 style="margin: 0; font-size: 48px; font-weight: 700;">{{ total }}</h1>
     </div>
-    <div style="flex: 1; background: #D4EDDA; padding: 15px; border-radius: 5px;">
-        <strong>Records for {{ session.circle }} Circle:</strong> {{ circle_count }}
+    
+    <div style="flex: 1; background: linear-gradient(135deg, #36D1DC 0%, #5B86E5 100%); color: white; padding: 25px; border-radius: 12px; box-shadow: 0 10px 15px -3px rgba(91, 134, 229, 0.3); text-align: center;">
+        <h4 style="margin: 0 0 10px 0; font-weight: 500; font-size: 16px;"><i class="fa-solid fa-map-location-dot"></i> Records for {{ session.circle }}</h4>
+        <h1 style="margin: 0; font-size: 48px; font-weight: 700;">{{ circle_count }}</h1>
     </div>
 </div>
 
-<h3>📊 Database View</h3>
-<div style="overflow-x: auto;">
+<h3 style="color: #4A5568; margin-bottom: 15px;"><i class="fa-solid fa-table-list" style="color: #A0AEC0;"></i> Database View</h3>
+<div class="table-container" style="overflow-x: auto;">
     {% if table %}
         {{ table|safe }}
     {% else %}
-        <p>No data available yet. Please navigate to the Upload page.</p>
+        <div style="padding: 30px; text-align: center; color: #718096;">
+            <i class="fa-solid fa-folder-open" style="font-size: 40px; margin-bottom: 15px; color: #CBD5E0;"></i>
+            <p>No data available yet. Please navigate to the Upload page to populate the master database.</p>
+        </div>
     {% endif %}
 </div>
 {% endblock %}
