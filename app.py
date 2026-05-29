@@ -15,6 +15,7 @@ COLUMNS_SCHEMA = [
     "Project Category", "# Site ID", "TOCO Name", "TOCO ID", "IP Fee", 
     "LLR", "Loading", "EB", "Diesel", "Claimed WoW", "New Site Id", "New ToCo id"
 ]
+# "Center" is included at the top of the list
 CIRCLES = ["Center", "AP", "ASM", "BIH", "DEL", "GUJ", "HP", "HRY", "JK", "KER", "KK", 
            "KOL", "MAH", "MP", "MUM", "ORI", "PUN", "RAJ", "TN", "UPE", "UPW", "WB"]
 
@@ -80,6 +81,7 @@ def login():
             session['email'] = email
             session['olm'] = olm
             session['circle'] = circle
+            session['login_time'] = datetime.datetime.now().strftime("%d-%m-%Y %H:%M")
             return redirect(url_for('dashboard'))
         else:
             flash('Invalid login. Ensure you use an @airtel.com email.', 'danger')
@@ -101,7 +103,20 @@ def dashboard():
     circle_records = len(df[df['Circle'] == session.get('circle')])
     data_html = df.to_html(classes="table table-striped table-bordered", index=False) if not df.empty else None
     
-    return render_template('dashboard.html', total=total_records, circle_count=circle_records, table=data_html)
+    # Calculate dynamic greeting
+    hour = datetime.datetime.now().hour
+    if hour < 12:
+        greeting = "Good Morning"
+    elif hour < 17:
+        greeting = "Good Afternoon"
+    else:
+        greeting = "Good Evening"
+    
+    return render_template('dashboard.html', 
+                           total=total_records, 
+                           circle_count=circle_records, 
+                           table=data_html,
+                           greeting=greeting)
 
 @app.route('/upload', methods=['GET', 'POST'])
 @login_required
@@ -124,7 +139,6 @@ def upload():
                 else:
                     raw_df = pd.read_excel(file)
                 
-                # Remove duplicates exactly like requested earlier
                 raw_df = raw_df.drop_duplicates(ignore_index=True)
                 is_valid, message, final_df = validate_uploaded_data(raw_df)
                 
